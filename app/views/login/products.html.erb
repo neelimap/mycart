@@ -1,0 +1,45 @@
+<div class="container">
+	
+	<div class="offset4"><h2><p class="title">Products</p></h2><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></p></div>
+	
+	</br></br></br></br>
+	<%= form_tag :action =>'addToCart'  do %>
+		<div class="row">
+			<table id="products">
+				<thead>
+					<tr>
+						<th class="span2 offset3"> </th>
+						<th class="span2 offset3">Product Name</th>
+						<th class="span2 offset3">Product Image</th>
+						<th class="span2 offset3">Product Description</th>
+						<th class="span2 offset3">Price</th>
+						<th class="span2 offset3">Qty</th>
+					</tr>
+				</thead>
+				<tbody>
+					 <% @products.each do |product| %>   
+				       <tr> 
+				         <td><%=check_box_tag "product[#{product.ProductID}]",product.ProductID %> &nbsp;</td>
+				         <td>&nbsp;&nbsp;&nbsp;&nbsp;<%= product.ProductName %></td> 
+				         <td><img src="/assets/<%=product.ProductID%>.png"></td>
+				         <td><%=text_area_tag 'Description', product.ProductDesc %></td>
+				         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Price %> </td>
+				         <td><%=text_field_tag "Quantity[#{product.ProductID}]",1 %> </td>
+				      </tr> 
+        			<%end%>
+				</tbody>
+			</table><br>
+ 			<div class="row">
+				<div class="span3 offset5" style="width:100px;"><%= submit_tag 'Add To Cart' %></div>
+			</div>
+		</div>
+	<% end %>
+
+		<div class="row">
+					<div class="span3 offset5" style="width:100px;"><%= button_to "View Cart", { :action => "viewCart" }%></div>
+		</div>
+
+		<% if flash[:notice] %>
+	      <p class="notice"><%= flash[:notice] %></p>
+	    <% end %>
+</div>

@@ -1,0 +1,24 @@
+<div class="container">
+	
+	<div class="offset4"><h2><p class="title">Shopping Cart</p></h1></div></br></br></br></br>
+	
+	<% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% end %>
+
+	<%= form_tag :action => 'processLogin' do %>
+		<div class="row">
+			<div class="span2 offset4"><%= label_tag 'UserID' %></div>
+			<%= text_field_tag 'UserID' %>
+		</div>
+		<div class="row">
+			<div class="span2 offset4"><%= label_tag 'Password' %></div>
+			<%= password_field_tag 'Password' %>
+		</div>
+		<div class="span3 offset6"><p>Sign Up? <%= link_to "Click Here",:action =>'SignUp' %></p></div>
+		
+		<div class="row">
+			<div class="span3 offset6"><%= submit_tag 'Login' %></div>
+		</div>
+	<% end %>
+</div>

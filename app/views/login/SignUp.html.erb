@@ -1,0 +1,53 @@
+<div class="container">
+
+<div class="offset4"><h2><p class="title">Shopping Cart</p></h1></div><br><br>
+
+
+<%= form_tag :action => 'signin' do %>
+
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'First Name' %></div>
+	<%= text_field_tag 'First_Name' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'Last Name' %></div>
+	<%= text_field_tag 'Last_Name' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'Password' %></div>
+	<%= password_field_tag 'Password' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'Confirm Password' %></div>
+	<%= password_field_tag 'Confirm_Password' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'Shipping Address' %></div>
+	<%= text_field_tag 'Shipping_Address' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'City' %></div>
+	<%= text_field_tag 'City' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'State' %></div>
+	<%= text_field_tag 'State' %>
+</div>
+<div class="row">
+	<div class="span2 offset3"><%= label_tag 'Zip' %></div>
+	<%= text_field_tag 'Zip' %>
+</div>
+<div class="row">
+	<div class="span3 offset6"><%= submit_tag 'Sign In' %></div>
+</div>
+<div class="row">
+	<div class="span3 offset6">
+		<% if flash[:notice] %>
+      		<p class="notice"><%= flash[:notice] %></p>
+      	<% end %>
+    </div>
+</div>	
+
+<% end %>
+
+</div>
