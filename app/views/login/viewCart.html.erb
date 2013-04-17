@@ -21,7 +21,7 @@
 				            <td><%= product.ProductName%></td>
 				            <td><%= product.ProductDesc%></td>
 				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Quantity%></td>
-							<td><%= link_to "Delete", cart_delete_path(product.id), remote: true %></td>
+							<td><%= link_to "Delete", cart_delete_path(product.id), remote: true %></td> 
 					    </tr> 
         			<%end%>
  				</tbody>
