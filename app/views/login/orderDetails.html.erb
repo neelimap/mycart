@@ -1,8 +1,8 @@
 <div class="container">
 	
-	<div class="offset5"><p class="title"><h4>Order Summary</h4></p><p class="span8 offset4"><%= link_to 'View Cart', :action => 'viewCart' %>&nbsp;&nbsp;<i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div>
-	
-	</br></br>
+	<div class="offset5"><p class="title"><h4>Order Summary</h4></p><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
+
+		
 	<%= form_tag :action =>'addToCart'  do %>
 		<div class="row">
 			<table id="orders">
