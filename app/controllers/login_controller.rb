@@ -29,13 +29,16 @@ class LoginController < ApplicationController
     @products=Product.all
   end
 
-
+  def logout
+    session[:userid] =''
+    redirect_to :action => "login"
+  end
 
   def signin
   	@first_name=params[:First_Name]
-    @last_name=params[:Last_Name]
+    @last_name=params[:Last_Name] 
     @password=params[:Password]
-    @address1=params[:ShippingAddress]
+    @address1=params[:Shipping_Address]
     @city=params[:City]
     @state=params[:State]
     @zip=params[:Zip]
@@ -50,7 +53,9 @@ class LoginController < ApplicationController
       else
             @createdUser  = User.where(:firstName => @first_name , :lastName => @last_name).first
               unless @createdUser.nil?
-                 flash[:notice] = "Your Id is"+@createdUser.id.to_s   
+                 flash[:notice] = "Your Id is"+@createdUser.id.to_s  
+                 session[:user] = @createdUser
+                 session[:userid]=@createdUser.id
                  redirect_to :action => "products"
               end
       end
@@ -59,15 +64,16 @@ class LoginController < ApplicationController
    
    def addToCart
        @products= Product.all
-       @user = session[:user]  
+         
     if params[:product].present?
-      params[:product].each do |items|        
+       params[:product].each do |items|        
        @quantityValue= params[:Quantity][items[0]]
-       @existingProduct  = Cart.where(:UserID=> @user.id , :ProductID => items[0]).first
+       @price= params[:Price][items[0]]
+       @existingProduct  = Cart.where(:UserID=> session[:userid] , :ProductID => items[0]).first
             unless @existingProduct.nil?
             @existingProduct.update_attribute(:Quantity, @existingProduct.Quantity.to_i+@quantityValue.to_i);
             else
-            Cart.create({:UserID => @user.id , :ProductID => items[0] , :Quantity => @quantityValue})
+            Cart.create({:UserID => session[:userid] , :ProductID => items[0] , :Quantity => @quantityValue, :Price => @price})
             end  
      end
 end  
@@ -77,8 +83,8 @@ end
   end
 
     def viewCart
-      @user = session[:user]
-      @userProducts=  Cart.joins(:Product).where(:UserID => @user.id).select("carts.*,  
+      
+      @userProducts=  Cart.joins(:Product).where(:UserID => session[:userid]).select("carts.*,  
                                 products.*")  
 
 
@@ -94,6 +100,12 @@ end
          format.js
       end
 
+  end
+
+  def orderDetails
+    @cartItems= Cart.where(:UserID => session[:userid])
+    @user=session[:user]
+    @address=@user.ShippingAddress
   end
 
 end

@@ -1,8 +1,6 @@
 <div class="container">
+	<div class="offset5"><p class="title"><h4>View Cart</h4></p><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
 	
-	<div class="offset4"><h2><p class="title">View Cart</p></h2><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></p></div>
-	
-	</br></br></br></br>
 	<%= form_tag :action =>'viewCart'  do %>
 		<div class="row">
 			<table id="products">
@@ -12,20 +10,26 @@
 						<th class="span2 offset3">Product Name</th>
 						<th class="span2 offset3">Product Description</th>
 						<th class="span2 offset3">Qty</th>
+						<th class="span2 offset3">Price</th>
 					</tr>
 				</thead>
 				<tbody>
         			<% @userProducts.each do |product| %> 
 				        <tr id="<%= dom_id(product) %>">
 				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.ProductID%></td> 
-				            <td><%= product.ProductName%></td>
+				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.ProductName%></td>
 				            <td><%= product.ProductDesc%></td>
 				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Quantity%></td>
+				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Price%></td>
 							<td><%= link_to "Delete", cart_delete_path(product.id), remote: true %></td> 
 					    </tr> 
         			<%end%>
  				</tbody>
-			</table>
+			</table><br>
+			
 		</div>
 	<% end %>
+	<div class="row">
+		<div class="span3 offset5" style="width:100px;"><%= button_to "Submit Order", { :action => "orderDetails" }%></div>
+	</div>
 </div>

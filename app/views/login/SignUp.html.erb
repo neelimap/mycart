@@ -1,7 +1,58 @@
+<script type="text/javascript">
+function checkValidation()
+{
+	var errormsg=''
+	var firstName=$('#First_Name').val()
+	var lastName=$('#Last_Name').val()
+	var pwd=$('#Password').val()
+	var confirmPwd=$('#Confirm_Password').val()
+	var address=$('#Shipping_Address').val()
+	var city=$('#City').val()
+	var state=$('#State').val()
+	var zip=$('#Zip').val()
+
+	if(firstName=="")
+		errormsg+='First Name cannot be blank.\n';
+	if(lastName=="")
+		errormsg+='Last Name cannot be blank.\n';
+	if(pwd=="")
+		errormsg+='Password cannot be blank.\n';
+	if(confirmPwd=="")
+		errormsg+='Confirm password cannot be blank.\n';
+	if(address=="")
+		errormsg+='Address cannot be blank.\n';
+	if(city=="")
+		errormsg+='City cannot be blank.\n';
+	if(state=="")
+		errormsg+='State cannot be blank.\n';
+		
+	if(zip != "") 
+	{
+    var value = zip.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    var intRegex = /^\d+$/;
+	    if(!intRegex.test(value)) 
+	        errormsg+= 'Zip field must be numeric.\n';
+	        
+	} 
+	else 
+  		errormsg+='Zip cannot be blank.\n';
+   
+  	if(pwd!=confirmPwd)
+		errormsg+='Password and Confirm password does not match.\n';
+
+	if(errormsg!="")
+	{
+		alert(errormsg);
+		return false;
+	}
+	else
+		return true;
+		
+}
+</script>
 <div class="container">
 
-<div class="offset4"><h2><p class="title">Shopping Cart</p></h1></div><br><br>
-
+<div class="offset4"><h4><p class="title">SignUp Form</p></h4></div></br></br>
 
 <%= form_tag :action => 'signin' do %>
 
@@ -38,15 +89,10 @@
 	<%= text_field_tag 'Zip' %>
 </div>
 <div class="row">
-	<div class="span3 offset6"><%= submit_tag 'Sign In' %></div>
+	<div class="span3 offset6"><%= submit_tag "Sign Up", :onclick => "return checkValidation();"%></div>
+	
 </div>
-<div class="row">
-	<div class="span3 offset6">
-		<% if flash[:notice] %>
-      		<p class="notice"><%= flash[:notice] %></p>
-      	<% end %>
-    </div>
-</div>	
+
 
 <% end %>
 
