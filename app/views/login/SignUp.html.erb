@@ -52,7 +52,7 @@ function checkValidation()
 </script>
 <div class="container">
 
-<div class="offset4"><h4><p class="title">SignUp Form</p></h4></div></br></br>
+<div class="offset4"><h4><p class="title" style="padding-left:100px;">SignUp Form</p></h4></div></br></br>
 
 <%= form_tag :action => 'signin' do %>
 
@@ -89,11 +89,15 @@ function checkValidation()
 	<%= text_field_tag 'Zip' %>
 </div>
 <div class="row">
-	<div class="span3 offset6"><%= submit_tag "Sign Up", :onclick => "return checkValidation();"%></div>
+	<div class="span3 offset6"><%= submit_tag "Sign Up",:onclick => "return checkValidation();", :class => "btn btn-info"%></div>
 	
+</div><br>
+
+<div class="span3 offset5">
+	<% if flash[:notice] %>
+		<p class="notice" style="color:red;"><%= flash[:notice] %></p>
+	<% end %>
 </div>
-
-
 <% end %>
 
 </div>

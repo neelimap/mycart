@@ -1,9 +1,28 @@
+<style type="text/css">
+#orders{
+    overflow: hidden;
+    width: 100%;
+border:1px solid #ddd;
+}
+table#orders tr th{
+	text-align:center;
+	background-color:#49AFCD;
+	border-left:1px solid #ddd;
+        padding:2px;
+
+}
+table#orders tr td{
+	text-align:center;
+	border-left:1px solid #ddd;
+	
+}
+</style>
 <div class="container">
 	
-	<div class="offset5"><p class="title"><h4>Order Summary</h4></p><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
+	<div class="offset3"><h4><p class="title">Order Summary</p></h4><p class="offset4"><i><span style="color:grey;">Logged in as :</span> </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
 
 		
-	<%= form_tag :action =>'addToCart'  do %>
+	<%= form_tag :action =>'products'  do %>
 		<div class="row">
 			<table id="orders">
 				<thead>
@@ -15,13 +34,12 @@
 				</thead>
 				<tbody>
 					<% sum = 0 %>
-        			<% @cartItems.each do |item| %> 
+        			<% @orderDetails.each do |item| %> 
 				        <tr>
-				             <td class="span4 offset4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= item.ProductID%></td> 
-				             <td class="span4 offset4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= item.Quantity%></td>
-				             <td class="span4 offset4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				             	<%= item.Price %></td>
-				             	<% sum = sum + item.Price.to_i * item.Quantity.to_i %>
+				             <td class="span4 offset4"><%= item.ProductID%></td> 
+				             <td class="span4 offset4"><%= item.Quantity%></td>
+				             <td class="span4 offset4"><%= item.Price %></td>
+				             <% sum = sum + item.Price.to_i * item.Quantity.to_i %>
 				             
 						</tr> 
         			<%end%>
@@ -31,8 +49,8 @@
 			<div class="span3 offset9">
 				<table>
 					<tr>
-						<td><b>Total Price:</b></td>
-						<td>&nbsp;<b>$<%= sum %></b></td>
+						<td style="color:green;"><b>Total Price:</b></td>
+						<td style="color:green;">&nbsp;<b>$<%= sum %></b></td>
 					</tr>
 				</table>
 			</div>
@@ -41,17 +59,17 @@
 			<div class="span12 offset1">
 				<table>
 					<tr>
-						<td><i>Your order has been delivered successfully to the below shipping address.</i></td>
+						<td style="color:green;"><i>Your order has been delivered successfully to the below shipping address.</i></td>
 					</tr>
 					<tr>
-						<td><br><%=text_area_tag 'Address', @address %></td>
+						<td><br><%=text_area_tag 'Address', @address,:class=>'textgreen' %></td>
 					</tr>
 				</table>
 			</div>
 		</div>
 						<br><br>
 		<div class="row">
-			<div class="span3 offset5" style="width:100px;"><%= submit_tag "Continue Shopping" %></div>
+			<div class="span3 offset5" style="width:100px;"><%= submit_tag "Continue Shopping",:class => "btn btn-info" %></div>
 		</div>
 		</div>
 	<% end %>

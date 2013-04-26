@@ -1,11 +1,28 @@
+<script type="text/javascript">
+function checkLogin()
+{
+	var errormsg=''
+	var userID=$('#UserID').val()
+	var password=$('#Password').val()
+
+	if(userID=="")
+		errormsg+='UserID cannot be blank.\n';
+	if(password=="")
+		errormsg+='Password cannot be blank.\n';
+
+	if(errormsg!="")
+	{
+		alert(errormsg);
+		return false;
+	}
+	else
+		return true;
+}
+</script>
 <div class="container">
 	
 	<div class="offset4"><h4><p class="title">User Login</p></h4></div></br></br></br></br>
 	
-	<% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice] %></p>
-    <% end %>
-
 	<%= form_tag :action => 'processLogin' do %>
 		<div class="row">
 			<div class="span2 offset4"><%= label_tag 'UserID' %></div>
@@ -16,9 +33,13 @@
 			<%= password_field_tag 'Password' %>
 		</div>
 		<div class="span3 offset6"><p>Sign Up? <%= link_to "Click Here",:action =>'SignUp' %></p></div>
-		
 		<div class="row">
-			<div class="span3 offset6"><%= submit_tag 'Login' %></div>
+			<div class="span3 offset7"><%= submit_tag 'Login',:onclick => "return checkLogin();",:class => "btn btn-info" %></div>
+		</div><br>
+		<div class="span3 offset6">
+			<% if flash[:notice] %>
+      			<p class="notice" style="color:red;"><%= flash[:notice] %></p>
+    		<% end %>
 		</div>
 	<% end %>
 </div>

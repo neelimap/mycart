@@ -1,7 +1,27 @@
+<style type="text/css">
+#products{
+    overflow: hidden;
+    width: 100%;
+border:1px solid #ddd;
+}
+table#products tr th{
+	text-align:center;
+	background-color:#49AFCD;
+	border-left:1px solid #ddd;
+        padding:2px;
+
+}
+table#products tr td{
+	text-align:center;
+	border-left:1px solid #ddd;
+	
+}
+</style>
+
 <div class="container">
 
-	<div class="offset5"><p class="title"><h4>Products</h4></p><p class="span8 offset4"><%= link_to 'View Cart', :action => 'viewCart' %>&nbsp;&nbsp;<i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br></br>
-
+	<div class="offset3"><h4><p class="title">Products</p></h4><p class="span8 offset4"><%= link_to 'View Cart', :action => 'viewCart' %>&nbsp;&nbsp;<i><span style="color:grey;">Logged in as :</span> </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br></br>
+<div id='productsdiv'>
 	<%= form_tag :action =>'addToCart'  do %>
 		<div class="row">
 			<table id="products">
@@ -10,7 +30,7 @@
 						<th class="span2 offset3"> </th>
 						<th class="span2 offset3">Product Name</th>
 						<th class="span2 offset3">&nbsp;Product Image</th>
-						<th class="span2 offset3">Product Description</th>
+						<th class="span2 offset3">Poduct Description</th>
 						<th class="span2 offset3">Price</th>
 						<th class="span2 offset3">Qty</th>
 					</tr>
@@ -29,11 +49,11 @@
 				</tbody>
 			</table><br>
  			<div class="row">
-				<div class="span3 offset5" style="width:100px;"><%= submit_tag 'Add To Cart' %></div>
+				<div class="span3 offset5" style="width:100px;"><%= submit_tag 'Add To Cart',:class => "btn btn-info" %></div>
 			</div>
 		</div>
 	<% end %>
-
+</div>
 		
 		<!--<% if flash[:notice] %>
 	      <p class="notice"><%= flash[:notice] %></p>

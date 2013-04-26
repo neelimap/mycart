@@ -1,4 +1,15 @@
 $('#<%= dom_id(@cartEntry)%>').fadeOut();
 
+if (<%= @cartDetails.nil? %>) 
+{
+	$('#productsdiv').hide();
+	$('#dispMessage1').text("You do not have any items in the cart.");
+	$('#divContinueShop').show();
 
+}
+	
+
+
+
+	
 

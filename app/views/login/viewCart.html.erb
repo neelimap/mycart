@@ -1,8 +1,67 @@
-<div class="container">
-	<div class="offset5"><p class="title"><h4>View Cart</h4></p><p class="offset4"><i>Logged in as : </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
+
+
+<script type="text/javascript">
+function editItem(productid) {
+
+    q = $('#Quantity_'+productid).val();
+ $.ajax({
+      
+      data          :        { 'qty' : q, 'id' :productid} ,             
+
+      success       : function(data, textStatus, XMLHttpRequest) {
+                           document.getElementById('qtyTable'+productid).style.display="none";
+                           document.getElementById('qty'+productid).style.display="block";
+                           document.getElementById('qty'+productid).innerHTML=q;
+                            },
+      error         : function(XMLHttpRequest, textStatus, errorThrown) {
+                            $('#annotation_dialog').html(XMLHttpRequest.responseText);
+                            },
+      type            : 'POST',
+      url                 : '/login/update'
+  });
+
+  return false;
+}
+
+
+function editQty(productid) {
+
+document.getElementById('qtyTable'+productid).style.display="block";
+document.getElementById('qty'+productid).style.display="none";
+return false;
+
+}
+</script>
+<style type="text/css">
+#products{
+    overflow: hidden;
+    width: 100%;
+border:1px solid #ddd;
+}
+table#products tr th{
+	text-align:center;
+	background-color:#49AFCD;
+	border-left:1px solid #ddd;
+        padding:2px;
+
+}
+table#products tr td{
+	text-align:center;
+	border-left:1px solid #ddd;
 	
+}
+</style>
+
+
+<div class="container">
+	<div class="offset3"><h4><p class="title">View Cart</p></h4><p class="span8 offset4"><i><span style="color:grey;">Logged in as :</span> </i><b><%= session[:userid] %></b>&nbsp;&nbsp;&nbsp;<%= link_to 'Logout',:action=>'login' %></p></div></br></br>
+
+	
+<div id='productsdiv'>
+	<% if !@userProducts.blank? %>
 	<%= form_tag :action =>'viewCart'  do %>
 		<div class="row">
+			
 			<table id="products">
 				<thead>
 					<tr>
@@ -11,25 +70,54 @@
 						<th class="span2 offset3">Product Description</th>
 						<th class="span2 offset3">Qty</th>
 						<th class="span2 offset3">Price</th>
+						<th class="span2 offset3" style="background-color:#fff;" >&nbsp;</th>
 					</tr>
 				</thead>
 				<tbody>
-        			<% @userProducts.each do |product| %> 
+					<% @userProducts.each do |product| %> 
 				        <tr id="<%= dom_id(product) %>">
-				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.ProductID%></td> 
-				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.ProductName%></td>
-				            <td><%= product.ProductDesc%></td>
-				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Quantity%></td>
-				            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= product.Price%></td>
-							<td><%= link_to "Delete", cart_delete_path(product.id), remote: true %></td> 
-					    </tr> 
+					        <td><%= product.ProductID%></td> 
+					        <td><%= product.ProductName%></td>
+					        <td><%=text_area_tag 'Description', product.ProductDesc%></td>
+						    <td>
+						    	<div id="qty<%=product.id%>"><%= product.Quantity%></div>
+                  				<table id ="qtyTable<%=product.id%>" style="display:none;">
+										<tr>
+											<td><%=text_field_tag "Quantity[#{product.id}]",product.Quantity %>
+											</td>
+										</tr>
+                          				<tr>
+                          					<td>
+                          						<%= link_to_function "Update", "editItem('#{product.id}')"%>
+	                  							<%= link_to "Delete", cart_delete_path(product.id), remote: true %>
+	                  						</td>
+	                  					</tr>
+	                  			</table>
+							</td>
+					        <td><%= product.Price%></td>
+                          	<td><%= link_to_function "Edit Quantity", "editQty('#{product.id}')"%></td> 				
+						</tr> 
         			<%end%>
- 				</tbody>
-			</table><br>
+        		</tbody>
+			</table>
+			<br>
 			
 		</div>
 	<% end %>
 	<div class="row">
-		<div class="span3 offset5" style="width:100px;"><%= button_to "Submit Order", { :action => "orderDetails" }%></div>
+		<div class="span3 offset5" style="width:100px;"><%= button_to "Submit Order", { :action => "orderDetails" },:class => "btn btn-info" %></div>
 	</div>
+</div>
+
+	<% else %>
+        <p id='dispMessage' class="span4 offset4" style="font-weight:bold;color:red;font-family:Arial;">You do not have any items in the cart.</p>
+        <br>
+        <div class="span3 offset5" style="width:100px;"><%= button_to "Continue Shopping", { :action => "products" },:class => "btn btn-info" %></div>
+    <%end%>
+
+    <div id="dispMessage1" class="span4 offset4" style="font-weight:bold;color:red;font-family:Arial;"></div>
+    <div id="divContinueShop" class="span3 offset5" style="width:100px;display:none;">
+    	<%= button_to "Continue Shopping", { :action => "products" },:class => "btn btn-info" %>
+    </div>
+	</div><br>
 </div>

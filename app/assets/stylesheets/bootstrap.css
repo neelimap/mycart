@@ -254,6 +254,13 @@ a:focus {
   background:#fff;
 }
 
+.textgreen
+{color:green;}
+
+#qtyTable6 input {
+width: 30px;
+}
+
 #header
 {
   background:#ccc;
@@ -266,10 +273,13 @@ a:focus {
 .title
 {
   font-size:20px;
-  padding-left: 85px;
+  padding-left: 140px;
   font-family:Arial;
+  color: #49AFCD;
 
 }
+.heading-color
+{color:#49AFCD;}
 
 .img-polaroid {
   padding: 4px;
@@ -713,6 +723,7 @@ a.muted:focus {
 .text-warning {
   color: #c09853;
 }
+
 
 a.text-warning:hover,
 a.text-warning:focus {
